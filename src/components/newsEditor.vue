@@ -41,6 +41,8 @@ import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import { getCurrentInstance } from 'vue';
+const { proxy } = getCurrentInstance();
 import dayjs from 'dayjs'
 const props = defineProps({
     rowMsg: {
@@ -48,6 +50,7 @@ const props = defineProps({
         default: "",
     },
 });
+const emits = defineEmits(["changeEditForm"]);
 const ifShowEdit = ref(false)
 const formLabelWidth = ref('120px')
 const mainImg = ref("")
@@ -59,6 +62,15 @@ const editform = reactive({
     html: "",
     imglist: []
 })
+const getLoading = ref(null);
+const tableData = ref([
+    {
+        id: "",
+        title: "",
+        date: "",
+        imglist: ''
+    },
+])
 watch(
     () => props.rowMsg,
     (newValue, oldValue) => {
@@ -67,6 +79,46 @@ watch(
     { deep: true, immediate: true }
 
 );
+watch(
+    () => editform,
+    (newValue, oldValue) => {
+        emits('changeEditForm', newValue)
+    },
+    { deep: true }
+
+);
+const rules = ref({
+    title: [
+        { required: true, message: "请输入新闻标题", trigger: "blur" },
+        { min: 1, max: 40, message: "长度在 1到 40 个字符", trigger: "blur" },
+    ],
+    date: [
+        {
+            type: "date",
+            required: true,
+            message: "请选择日期",
+            trigger: "blur",
+        },
+    ],
+    mainimg: [
+        { required: true, message: "请上传一张主图", trigger: "change" },
+    ],
+})
+defineExpose({
+    validateForm,
+});
+const ruleForm = ref(null);
+async function validateForm() {
+    let res = false;
+    await proxy.$refs["ruleForm"].validate((valid) => {
+        if (valid) {
+            res = true
+        } else {
+            res = false
+        }
+    })
+    return res
+}
 function setEditMsg() {
     editform.id = props.rowMsg.id;
     editform.title = props.rowMsg.title;
@@ -157,32 +209,8 @@ function imgUpload(file, insertFn) {
     };
     reader.readAsDataURL(file);
 }
-const rules = ref({
-    title: [
-        { required: true, message: "请输入新闻标题", trigger: "blur" },
-        { min: 1, max: 40, message: "长度在 1到 40 个字符", trigger: "blur" },
-    ],
-    date: [
-        {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "blur",
-        },
-    ],
-    mainimg: [
-        { required: true, message: "请上传一张主图", trigger: "change" },
-    ],
-})
-const getLoading = ref(null);
-const tableData = ref([
-    {
-        id: "",
-        title: "",
-        date: "",
-        imglist: ''
-    },
-]) 
+
+
 </script>
 
 <style lang="scss" scoped>

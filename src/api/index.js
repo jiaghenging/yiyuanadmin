@@ -23,3 +23,19 @@ export function uploadImg(params){
         data:params
     })
 }
+// 检查token
+export function checkUserState(){
+    return request({
+        url:'/checkuserstate',
+        method:'GET',
+    })
+}
+// 更新新闻
+export function updateNews(params){
+    console.log(params);
+    return request({
+        url:'/updatenews',
+        method:'POST',
+        data:params
+    })
+}
