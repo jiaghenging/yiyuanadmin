@@ -1,0 +1,59 @@
+.addnewsBox{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.news_msg{
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+}
+.news_item_title{
+    padding: 20px 0;
+    position: relative;
+    padding-left: 20px;
+    &::before{
+        content: "";
+        width: 2px ;
+        height: 20px;
+        background-color: #3390ff;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(0,-50%);
+    }
+}
+.news_msg_form{
+    max-width: 670px;
+}
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .btn_addnews{
+    display: flex;
+    position: absolute;
+    left: 320px;
+    bottom: 5%;
+  }
