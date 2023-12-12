@@ -132,6 +132,8 @@ function getNews() {
     }
   }).catch(err => {
     console.log(err);
+    tableData.value=[];
+    tableLoading.value=false
   })
 }
 onMounted(() => {
