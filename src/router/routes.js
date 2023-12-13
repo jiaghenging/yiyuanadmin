@@ -1,27 +1,45 @@
 
-const main = () => import('@/views/layout.vue')
+const main = () => import('@/views/layout/index.vue')
+import { markRaw } from 'vue'
+import {  Menu,Odometer,Setting } from "@element-plus/icons-vue";
+const menuIcon = markRaw(Menu)
+const odometerIcon = markRaw(Odometer)
+const settingIcon = markRaw(Setting)
 const routes = [
   {
     path: '/',
     component: main,
     show: false,
-    redirect: '/news/newslist',
+    redirect: '/dashBoard',
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/news/newslist.vue'),
+        component: () => import('@/views/dashBoard/index.vue'),
         name: 'Index',
         meta: { title: 'Dashboard', icon: 'dashboard', affix: false }
       }
     ]
   },
   {
+    path: '/dashBoard',
+    meta: {
+      title: 'DashBoard',
+      icon: odometerIcon
+    },
+    show: true,
+    component: main,
+    component: () => import('@/views/dashBoard/index.vue')
+  },
+  {
     path: '/news',
-    title: '新闻管理',
     show: true,
     component: main,
     redirect: 'noRedirect',
     name: 'Daohang',
+    meta: {
+      title: '新闻管理',
+      icon: menuIcon
+    },
     children: [
       {
         path: 'newslist',
@@ -44,11 +62,14 @@ const routes = [
   },
   {
     path: '/system',
-    title: '系统管理',
     show: true,
     component: main,
     redirect: 'noRedirect',
     name: 'System',
+    meta: {
+      title: '系统管理',
+      icon: settingIcon
+    },
     children: [
       {
         path: 'usergl',

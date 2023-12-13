@@ -96,7 +96,7 @@ const editorConfig = reactive({
   MENU_CONF: {
     //配置上传图片
     uploadImage: {
-      customUpload: this.imgUpload,
+      customUpload: imgUpload(),
     },
   },
 })
