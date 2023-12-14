@@ -7,9 +7,10 @@
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
+    :collapse="appStore.isCollapse"
   >
     <div class="left_header">
-      <h1>GKD后台管理系统</h1>
+      <h1>{{appStore.isCollapse?'GKD':'GKD管理系统'}}</h1>
     </div>
     <template v-for="(item_f, index_f) in routeMsg" :key="index_f">
       <el-sub-menu
@@ -48,9 +49,11 @@
 </template>
 
 <script setup>
+import { useAppStore } from "@/store/modules/app";
 import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import routes from "@/router/routes.js";
+const appStore = useAppStore();
 const router = useRouter();
 const routeMsg = ref([]);
 function setRoutes() {
